@@ -1,0 +1,19 @@
+{
+  "name": "javascript-on-your-machine",
+  "version": "1.0.0",
+  "description": "This is the final assignment for the JavaScript on Your Machine Module.",
+  "scripts": {
+    "start": "node ./src/solution.js",
+    "test": "mocha"
+  },
+  "dependencies": {
+    "faker": "4.1.0"
+  },
+  "keywords": [],
+  "author": "Thinkful",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1"
+  }
+}
