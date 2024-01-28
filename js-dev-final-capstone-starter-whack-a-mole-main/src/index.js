@@ -10,7 +10,9 @@ let time = 0;
 let timer;
 let lastHole = 0;
 let points = 0;
+let moleWhacked = false;
 let difficulty = "easy";
+
 
 
 
@@ -166,8 +168,8 @@ function showAndHide(hole, delay){
  const timeoutID = setTimeout(() => {
     toggleVisibility(hole);
     gameOver();
-	}, delay);  // TODO: change the setTimeout delay to the one provided as a parameter
-
+    moleWhacked = false
+	}, delay);  // TODO: change the setTimeout delay to the one provided as a parameter return timeoutID;
   return timeoutID;
 }
 
@@ -239,6 +241,7 @@ function updateTimer() {
 function startTimer() {
   // TODO: Write your code here
    timer = setInterval(updateTimer, 1000);
+   return timer;
 }
 
 /**
@@ -250,9 +253,10 @@ function startTimer() {
 *
 */
 function whack(event) {
+  const updateScore = event.whacked
   // TODO: Write your code here.
   // call updateScore()
-   updateScore();
+  updateScore();
   playAudio(audioHit);
   return points;
 }
@@ -263,13 +267,13 @@ function whack(event) {
 * Adds the 'click' event listeners to the moles. See the instructions
 * for an example on how to set event listeners using a for loop.
 */
-function setEventListeners(moles){
+function setEventListeners(){
   // TODO: Write your code here
-  moles.forEach(mole => mole.addEventListener('click', whack)
-  );
-  moles.removeEventListener('click', whack); // Remove the event listener after clicking
+  moles.forEach(mole => mole.addEventListener('click', whack));
+    moles.removeEventListener('click', whack) // Remove the event listener after clicking
   return moles;
 }
+
 
 /**
 *
@@ -289,9 +293,12 @@ function setDuration(duration) {
 *
 */
 function stopGame() { 
+  stopAudio(song);
+  clearTimeout(timeoutID); 
   clearInterval(timer);
-  time = 15;
+  clearScore();
   stopAudio(song); 
+  moleWhacked = false; // Reset the flag
   return "game stopped";
 }
 
@@ -303,12 +310,14 @@ function stopGame() {
 */
 
 function startGame() {
-    setDuration(10);
-    showUp();
-    points = 0;
-     return "game started";
-  }
- 
+  setDuration(10);
+  showUp();
+  points = 0;
+  clearScore();
+  startTimer();
+  setEventListeners();
+  return "game started";
+}
 
 
 startButton.addEventListener("click", startGame);
