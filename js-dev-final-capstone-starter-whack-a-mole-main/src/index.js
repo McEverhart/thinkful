@@ -166,10 +166,10 @@ function showAndHide(hole, delay){
 
 
  const timeoutID = setTimeout(() => {
-    toggleVisibility(hole);
+    toggleVisibility(delay);
     gameOver();
-    moleWhacked = false
-	}, delay);  // TODO: change the setTimeout delay to the one provided as a parameter return timeoutID;
+    moleWhacked = false;
+	}, 0);  // TODO: change the setTimeout delay to the one provided as a parameter return timeoutID;
   return timeoutID;
 }
 
@@ -224,7 +224,6 @@ function clearScore() {
 function updateTimer() {
   // TODO: Write your code here.
   // hint: this code is provided to you in the instructions.
-  console.log("updateTimer function called");
   if (time > 0) {
 		time -= 1;
 		timerDisplay.textContent = time;
@@ -267,10 +266,10 @@ function whack(event) {
 * Adds the 'click' event listeners to the moles. See the instructions
 * for an example on how to set event listeners using a for loop.
 */
-function setEventListeners(){
+function setEventListeners(moles){
   // TODO: Write your code here
   moles.forEach(mole => mole.addEventListener('click', whack));
-    moles.removeEventListener('click', whack) // Remove the event listener after clicking
+    moles.removeEventListener('after.click', whack) // Remove the event listener after clicking
   return moles;
 }
 
@@ -293,12 +292,8 @@ function setDuration(duration) {
 *
 */
 function stopGame() { 
-  stopAudio(song);
-  clearTimeout(timeoutID); 
-  clearInterval(timer);
-  clearScore();
   stopAudio(song); 
-  moleWhacked = false; // Reset the flag
+  clearInterval(timer);
   return "game stopped";
 }
 
@@ -312,10 +307,6 @@ function stopGame() {
 function startGame() {
   setDuration(10);
   showUp();
-  points = 0;
-  clearScore();
-  startTimer();
-  setEventListeners();
   return "game started";
 }
 
